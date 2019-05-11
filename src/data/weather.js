@@ -34,7 +34,6 @@ function formatWeatherDate(res) {
 function getApiEndpoint(time, locationID) {
   // DarkSky API doesn't accept milliseconds, so they are stripped.
   // https://darksky.net/dev/docs#time-machine-request
-  // @TODO Is this OK???
   const formattedTime = Math.floor(time / 1000)
   const { apiKey } = config.server.darksky
   const { lat, lon } = LOCATIONS[locationID]

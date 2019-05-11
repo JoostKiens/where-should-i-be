@@ -7,13 +7,6 @@ const DAYS = 365
 const LOCATION_IDS = Object.keys(LOCATIONS)
 
 export async function getDocs() {
-  // return db()
-  //   .collection('days')
-  //   .where('success', '==', false)
-  //   .get()
-  //   .then(snap => snap.docs.forEach(doc => doc.ref.delete()))
-  //   .catch(error => console.error('Error getting documents: ', error))
-
   const docs = await getDocsForDays()
   const missingEntries = getMissingEntries(docs)
   if (missingEntries.length) {
