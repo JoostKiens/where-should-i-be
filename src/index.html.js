@@ -14,7 +14,6 @@ main.routes = {
       }
       return { status: 404, data: { missing: true } }
     } catch (e) {
-      console.error(e)
       return { status: 500, data: { error: true } }
     }
   },
