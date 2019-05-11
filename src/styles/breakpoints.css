@@ -1,0 +1,11 @@
+@value breakpointSm: 600px;
+@value breakpointMd: 1025px;
+@value breakpointLg: 1280px;
+@value breakpointXl: 1600px;
+
+:root {
+  --breakpoint-sm: breakpointSm;
+  --breakpoint-md: breakpointMd;
+  --breakpoint-lg: breakpointLg;
+  --breakpoint-xl: breakpointXl;
+}
