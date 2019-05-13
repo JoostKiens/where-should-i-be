@@ -1,6 +1,7 @@
 import { min, max } from 'd3-array'
 import { createColorScale } from '/partials/createChartScales'
 import ChartWrapper from '/partials/ChartWrapper'
+import Hammer from 'react-hammerjs'
 
 export default function Main({ docs }) {
   const lowMin = min(docs, ({ temperatureMin }) => temperatureMin)
@@ -11,17 +12,30 @@ export default function Main({ docs }) {
   return (
     <div>
       <h1>Charts</h1>
-      <React.Fragment>
-        <ChartWrapper
-          colorScale={colorScale}
-          docsNL={docsNL}
-          docsTH={docsTH}
-          highMax={highMax}
-          lowMin={lowMin}
-        />
-      </React.Fragment>
+      <Hammer
+        onSwipe={handleSwipe}
+        onPan={handlePan}
+        direction="DIRECTION_HORIZONTAL"
+      >
+        <div>
+          <ChartWrapper
+            colorScale={colorScale}
+            docsNL={docsNL}
+            docsTH={docsTH}
+            highMax={highMax}
+            lowMin={lowMin}
+          />
+        </div>
+      </Hammer>
     </div>
   )
+}
+
+function handleSwipe(e) {
+  console.log('Swipe', e)
+}
+function handlePan(e) {
+  console.log('Pan', e)
 }
 
 function splitByLocation(docs) {
