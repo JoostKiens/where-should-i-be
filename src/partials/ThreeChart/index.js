@@ -7,9 +7,9 @@ import {
   Scene,
   WebGLRenderer,
 } from 'three'
-import Chart from './Chart'
+import { Chart } from './Chart'
 
-export default class ThreeChart extends Component {
+export class ThreeChart extends Component {
   componentDidMount() {
     const {
       width,

@@ -1,8 +1,7 @@
-import 'normalize.css'
-import head from '/partials/head'
-import { getDocs } from '/data/doc'
-import Main from '/partials/Main?universal'
 import { Error } from '/partials/Error'
+import { getDocs } from '/data/doc'
+import { head } from '/partials/head'
+import Main from '/partials/Main?universal'
 
 main.routes = {
   match: async ({ pathname }) => {

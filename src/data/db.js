@@ -3,7 +3,7 @@ import 'firebase/firestore'
 import config from '@kaliber/config'
 import firebase from 'firebase-admin'
 
-export default function db() {
+export function db() {
   try {
     return firebase.firestore()
   } catch (e) {

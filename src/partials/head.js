@@ -4,7 +4,7 @@ import polyfill from '@kaliber/build/lib/polyfill'
 import rollbar from '@kaliber/build/lib/rollbar'
 import stylesheet from '@kaliber/build/lib/stylesheet'
 
-export default function(title) {
+export function head(title) {
   return (
     <head>
       <title>{title}</title>

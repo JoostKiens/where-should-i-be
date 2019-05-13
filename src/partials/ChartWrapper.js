@@ -1,5 +1,5 @@
 import { withViewport } from '/partials/withViewport'
-import ThreeChart from '/partials/ThreeChart/index'
+import { ThreeChart } from '/partials/ThreeChart/index'
 
 export default
 @withViewport()

@@ -1,9 +1,9 @@
 import { Group } from 'three'
 import { createHeightScale } from '/partials/createChartScales'
-import Segment from './Segment'
+import { Segment } from './Segment'
 import { tween, stagger, parallel, easing } from 'popmotion'
 
-export default class Chart extends Group {
+export class Chart extends Group {
   constructor(props) {
     super(props)
     this.segments = createSegments(props)

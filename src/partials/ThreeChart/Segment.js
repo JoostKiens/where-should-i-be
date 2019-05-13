@@ -1,6 +1,6 @@
 import { Mesh, Shape, Color, MeshLambertMaterial, ExtrudeGeometry } from 'three'
 
-export default class Segment extends Mesh {
+export class Segment extends Mesh {
   constructor({
     color,
     innerRadius,

@@ -1,4 +1,4 @@
-import db from '/data/db'
+import { db } from '/data/db'
 import { getWeather } from '/data/weather'
 import { getTimesForDays, getUTCTimeForDaysAgo } from '/utils/date'
 import { LOCATIONS } from '/constants'
