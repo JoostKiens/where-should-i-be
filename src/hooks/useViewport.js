@@ -10,14 +10,13 @@ export const useViewport = () => {
   const [viewport, setViewport] = useState(getViewport(isServer()))
 
   useEffect(() => {
+    const handleResize = debounce(() => {
+      if (refMounted.current) setViewport(getViewport())
+    }, 250)
+
     crossBrowserResize.addListener(handleResize)
     return () => crossBrowserResize.removeListener(handleResize)
-  })
-
-  const handleResize = debounce(
-    () => refMounted.current && setViewport(getViewport()),
-    250
-  )
+  }, [refMounted])
 
   return viewport
 }

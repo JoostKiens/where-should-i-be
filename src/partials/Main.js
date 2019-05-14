@@ -8,34 +8,28 @@ export default function Main({ docs }) {
   const highMax = max(docs, ({ temperatureMax }) => temperatureMax)
   const colorScale = createColorScale(docs)
   const [docsNL, docsTH] = splitByLocation(docs).map(sortByTime)
-
+  console.log('render main')
   return (
     <div>
       <h1>Charts</h1>
-      <Hammer
-        onSwipe={handleSwipe}
-        onPan={handlePan}
-        direction="DIRECTION_HORIZONTAL"
-      >
-        <div>
-          <ChartWrapper
-            colorScale={colorScale}
-            docsNL={docsNL}
-            docsTH={docsTH}
-            highMax={highMax}
-            lowMin={lowMin}
-          />
-        </div>
-      </Hammer>
+      <div>
+        <ChartWrapper
+          colorScale={colorScale}
+          docsNL={docsNL}
+          docsTH={docsTH}
+          highMax={highMax}
+          lowMin={lowMin}
+        />
+      </div>
     </div>
   )
 }
 
 function handleSwipe(e) {
-  console.log('Swipe', e)
+  // console.log('Swipe', e)
 }
 function handlePan(e) {
-  console.log('Pan', e)
+  // console.log('Pan', e)
 }
 
 function splitByLocation(docs) {
