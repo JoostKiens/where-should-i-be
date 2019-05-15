@@ -3,7 +3,6 @@ import { getCamera, getRenderer, getScene } from './threeSetup'
 import { Ring } from './Ring'
 
 export const Chart = props => {
-  console.log('Chart', props)
   return (
     <SceneManager
       getCamera={getCamera}

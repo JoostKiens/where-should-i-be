@@ -1,7 +1,7 @@
 import {
   Shape,
   Group,
-  ExtrudeGeometry,
+  ExtrudeBufferGeometry,
   MeshLambertMaterial,
   Mesh,
   Color,
@@ -43,64 +43,73 @@ export const Ring = props => {
 const createSegments = ({ docs, lowMin, highMax, colorScale }) => {
   const heightScale = createHeightScale(lowMin, highMax, 4)
   const spacing = 0.001
+  const innerRadius = 10
+  const outerRadius = 11
+  const segmentAngle = (Math.PI * 2) / docs.length
+  const material = createSegmentMaterial()
+  const geometry = createSegmentGeometry(
+    segmentAngle - spacing,
+    innerRadius,
+    outerRadius
+  )
 
-  return docs.reduce((res, { temperatureMax, temperatureMin }, index, arr) => {
+  return docs.reduce((res, { temperatureMax, temperatureMin }, index) => {
     const avg = (temperatureMax + temperatureMin) / 2
-    const segmentAngle = (Math.PI * 2) / arr.length
     const startAngle = index * segmentAngle + Math.PI
 
-    const segment = createSegment({
-      color: colorScale(avg),
-      depth: heightScale(temperatureMax - temperatureMin),
-      endAngle: startAngle + segmentAngle - spacing,
-      innerRadius: 10,
-      outerRadius: 11,
-      startAngle,
-      translateZ: heightScale(temperatureMin),
-    })
+    const segment = createSegment(
+      {
+        alpha: segmentAngle - spacing,
+        color: colorScale(avg),
+        depth: heightScale(temperatureMax - temperatureMin),
+        startAngle,
+        translateZ: heightScale(temperatureMin),
+      },
+      geometry,
+      material
+    )
 
     return [...res, segment]
   }, [])
 }
 
-const createSegment = props => {
-  const {
-    color = 0x00ff00,
-    innerRadius = 10,
-    outerRadius = 11,
-    startAngle = 0,
-    endAngle = 1,
-    depth = 1,
-    translateZ = 0,
-  } = props
-
-  const halfAlpha = (endAngle - startAngle) / 2
+const createSegmentGeometry = (alpha, innerRadius, outerRadius) => {
+  const halfAlpha = alpha / 2
   const halfInnerWidth = innerRadius * Math.atan(halfAlpha)
   const halfOuterWidth = outerRadius * Math.atan(halfAlpha)
   const shape = new Shape()
-
   shape.moveTo(-halfOuterWidth, outerRadius)
   shape.lineTo(halfOuterWidth, outerRadius)
   shape.lineTo(halfInnerWidth, innerRadius)
   shape.lineTo(-halfInnerWidth, innerRadius)
   shape.lineTo(-halfOuterWidth, outerRadius)
 
-  const geometry = new ExtrudeGeometry(shape, {
+  return new ExtrudeBufferGeometry(shape, {
     bevelEnabled: false,
-    depth,
+    depth: 1,
     steps: 1,
   })
+}
 
-  const material = new MeshLambertMaterial({
+const createSegmentMaterial = () =>
+  new MeshLambertMaterial({ flatShading: true })
+
+const createSegment = (
+  { color, alpha, startAngle, depth, translateZ },
+  geometry,
+  material
+) => {
+  const segMaterial = material.clone()
+  segMaterial.setValues({
     color,
     emissive: getEmissive(color),
   })
 
-  const mesh = new Mesh(geometry, material)
+  const mesh = new Mesh(geometry, segMaterial)
 
-  mesh.rotation.z = startAngle + halfAlpha
+  mesh.rotation.z = startAngle + alpha / 2
   mesh.position.set(0, 0, translateZ)
-  mesh.scale.set(0.2, 0.2, 0.2)
+  mesh.scale.set(0.2, 0.2, 0.2 * depth)
   mesh.visible = true
   return mesh
 }
