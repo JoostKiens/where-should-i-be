@@ -1,14 +1,14 @@
-import { ThreeChart } from '/partials/ThreeChart/index'
-import { useViewport } from '/hooks/useViewport'
+import { Chart } from '/partials/Chart/Chart'
 
 export default function ChartWrapper(props) {
-  const { viewportWidth, viewportHeight } = useViewport()
-
   return (
-    <ThreeChart
-      {...props}
-      viewportWidth={viewportWidth}
-      viewportHeight={viewportHeight}
-    />
+    <div
+      style={{
+        width: `100vw`,
+        height: `100vh`,
+      }}
+    >
+      <Chart {...props} />
+    </div>
   )
 }

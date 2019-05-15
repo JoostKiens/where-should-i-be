@@ -1,6 +1,7 @@
 import { min, max } from 'd3-array'
 import { createColorScale } from '/partials/createChartScales'
 import ChartWrapper from '/partials/ChartWrapper'
+import { useEffect, useState } from 'react'
 import Hammer from 'react-hammerjs'
 
 export default function Main({ docs }) {
@@ -8,11 +9,16 @@ export default function Main({ docs }) {
   const highMax = max(docs, ({ temperatureMax }) => temperatureMax)
   const colorScale = createColorScale(docs)
   const [docsNL, docsTH] = splitByLocation(docs).map(sortByTime)
-  console.log('render main')
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+    return () => setIsMounted(false)
+  }, [setIsMounted])
   return (
     <div>
       <h1>Charts</h1>
-      <div>
+      {!isMounted ? null : (
         <ChartWrapper
           colorScale={colorScale}
           docsNL={docsNL}
@@ -20,7 +26,7 @@ export default function Main({ docs }) {
           highMax={highMax}
           lowMin={lowMin}
         />
-      </div>
+      )}
     </div>
   )
 }
