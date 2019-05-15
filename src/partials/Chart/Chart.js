@@ -1,7 +1,6 @@
 import SceneManager from '/machinery/ThreeJSManager'
 import { getCamera, getRenderer, getScene } from './threeSetup'
 import { Ring } from './Ring'
-import { Cube } from './Cube'
 
 export const Chart = props => {
   console.log('Chart', props)
