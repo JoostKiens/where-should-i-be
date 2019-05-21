@@ -1,6 +1,6 @@
-import { Shape, ExtrudeBufferGeometry, MeshLambertMaterial, Mesh } from 'three'
 import { createHeightScale } from '/partials/createChartScales'
 import { rgb2hex, shadeHexColor } from '/utils/color'
+import { Shape, ExtrudeBufferGeometry, MeshLambertMaterial, Mesh } from 'three'
 
 const SPACING = 0.001
 const INNER_RADIUS = 10
