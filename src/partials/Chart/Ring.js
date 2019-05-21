@@ -8,15 +8,16 @@ export const Ring = props => {
     context => {
       const { scene } = context
       const ring = new Group()
-      console.time('create segments')
       const segments = createSegments(props)
-      console.timeEnd('create segments')
 
       segments.forEach(x => ring.add(x))
+
       ring.position.set(0, -1, 0)
       ring.rotation.x = props.rotateX
-      scene.add(ring)
+      ring.matrixAutoUpdate = false
+      ring.updateMatrix()
 
+      scene.add(ring)
       return ring
     },
     [props]
