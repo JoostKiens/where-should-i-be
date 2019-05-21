@@ -1,6 +1,12 @@
-import { createHeightScale } from '/partials/createChartScales'
+import { createHeightScale } from './createChartScales'
 import { rgb2hex, shadeHexColor } from '/utils/color'
-import { Shape, ExtrudeBufferGeometry, MeshLambertMaterial, Mesh } from 'three'
+import {
+  Shape,
+  ExtrudeBufferGeometry,
+  MeshLambertMaterial,
+  Mesh,
+  Vector2,
+} from 'three'
 
 const SPACING = 0.001
 const INNER_RADIUS = 10
@@ -60,16 +66,19 @@ const createSegment = (
 }
 
 const createSegmentGeometry = (alpha, INNER_RADIUS, OUTER_RADIUS) => {
+  const vec2 = new Vector2()
   const halfAlpha = alpha / 2
   const halfInnerWidth = INNER_RADIUS * Math.atan(halfAlpha)
   const halfOuterWidth = OUTER_RADIUS * Math.atan(halfAlpha)
-  const shape = new Shape()
-  shape.moveTo(-halfOuterWidth, OUTER_RADIUS)
-  shape.lineTo(halfOuterWidth, OUTER_RADIUS)
-  shape.lineTo(halfInnerWidth, INNER_RADIUS)
-  shape.lineTo(-halfInnerWidth, INNER_RADIUS)
-  shape.lineTo(-halfOuterWidth, OUTER_RADIUS)
+  const shape = new Shape([
+    vec2.clone().set(-halfOuterWidth, OUTER_RADIUS),
+    vec2.clone().set(halfOuterWidth, OUTER_RADIUS),
+    vec2.clone().set(halfInnerWidth, INNER_RADIUS),
+    vec2.clone().set(-halfInnerWidth, INNER_RADIUS),
+    vec2.clone().set(-halfOuterWidth, OUTER_RADIUS),
+  ])
 
+  // Should we use InstancedBufferGeometry?
   return new ExtrudeBufferGeometry(shape, {
     bevelEnabled: false,
     depth: 1,
