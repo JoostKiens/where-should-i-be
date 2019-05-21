@@ -34,8 +34,10 @@ export const getRenderer = canvas => {
 
 export const getScene = () => {
   const directionalLight = new DirectionalLight(0xffffff, 1)
-  directionalLight.position.set(0, 15, 20)
   const scene = new Scene()
+
+  directionalLight.position.set(0, 15, 20)
+
   scene.add(directionalLight)
   scene.add(new AmbientLight(0x404040))
   scene.background = new Color(0x000000)
