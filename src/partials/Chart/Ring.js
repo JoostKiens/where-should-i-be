@@ -1,6 +1,6 @@
 import { createSegments } from './createSegments'
 import { Group } from 'three'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import { useThree } from '/machinery/ThreeJSManager/'
 
 export const Ring = props => {

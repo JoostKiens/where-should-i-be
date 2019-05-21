@@ -1,11 +1,6 @@
-import {
-  Shape,
-  ExtrudeBufferGeometry,
-  MeshLambertMaterial,
-  Mesh,
-  Color,
-} from 'three'
+import { Shape, ExtrudeBufferGeometry, MeshLambertMaterial, Mesh } from 'three'
 import { createHeightScale } from '/partials/createChartScales'
+import { rgb2hex, shadeHexColor } from '/utils/color'
 
 const SPACING = 0.001
 const INNER_RADIUS = 10
@@ -29,7 +24,7 @@ export const createSegments = ({ docs, lowMin, highMax, colorScale }) => {
     const segment = createSegment(
       {
         alpha: segmentAngle - SPACING,
-        color: colorScale(avg),
+        color: rgb2hex(colorScale(avg)),
         depth: heightScale(temperatureMax - temperatureMin),
         startAngle,
         translateZ: heightScale(temperatureMin),
@@ -49,9 +44,10 @@ const createSegment = (
   material
 ) => {
   const segMaterial = material.clone()
+  const shadedColor = shadeHexColor(color, -0.7)
   segMaterial.setValues({
-    color,
-    emissive: getEmissive(color),
+    color: parseInt(`0x${color}`, 16),
+    emissive: parseInt(`0x${shadedColor}`, 16),
   })
 
   const mesh = new Mesh(geometry, segMaterial)
@@ -83,9 +79,3 @@ const createSegmentGeometry = (alpha, INNER_RADIUS, OUTER_RADIUS) => {
 
 const createSegmentMaterial = () =>
   new MeshLambertMaterial({ flatShading: true })
-
-const getEmissive = color => {
-  const hslColor = new Color()
-  new Color(color).getHSL(hslColor)
-  return new Color().setHSL(hslColor.h, hslColor.s, hslColor.l - 0.5)
-}
