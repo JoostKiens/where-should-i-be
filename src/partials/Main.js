@@ -19,7 +19,7 @@ export default function Main({ docs }) {
 
   // also need to add weights for niceness
   // @TODO we should do this before we store on server
-  const docsWithArc = enrichDocs(docs)
+  const enrichedDocs = enrichDocs(docs)
 
   useEffect(() => {
     setIsMounted(true)
@@ -28,7 +28,7 @@ export default function Main({ docs }) {
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      {!isMounted ? null : <Scene docs={docsWithArc} />}
+      {!isMounted ? null : <Scene docs={enrichedDocs} />}
     </StateProvider>
   )
 }
