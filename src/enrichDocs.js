@@ -1,16 +1,16 @@
-import { min, max } from 'd3-array'
-import { scaleTime } from 'd3-scale'
+import { ARCS } from '/constants'
 
 const addExtraToDocs = docs => {
-  const arcScale = scaleTime()
-    .domain([min(docs, x => x.time), max(docs, x => x.time)])
-    .range([Math.PI * 2, 0])
+  return docs.map((doc, index) => {
+    // map indices of 730 docs to 365 arcs
+    const arcIndex = Math.floor(index / 2)
 
-  return docs.map((doc, index) => ({
-    ...doc,
-    arc: arcScale(doc.time),
-    avg: (doc.temperatureMax + doc.temperatureMin) / 2,
-  }))
+    return {
+      ...doc,
+      arc: ARCS.reverse()[arcIndex],
+      avg: (doc.temperatureMax + doc.temperatureMin) / 2,
+    }
+  })
 }
 
 export const enrichDocs = docs => {

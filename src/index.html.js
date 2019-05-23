@@ -9,7 +9,7 @@ main.routes = {
     try {
       if (pathname === '/') {
         const docs = await getDocs()
-        const missing = !docs
+        const missing = !docs || docs.length !== 730
         return { status: missing ? 404 : 200, data: { missing, docs } }
       }
       return { status: 404, data: { missing: true } }

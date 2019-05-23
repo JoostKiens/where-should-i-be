@@ -1,4 +1,8 @@
 import variablesStyles from '/styles/breakpoints.css'
+import { times } from '/utils/array'
+
+const INC = (Math.PI * 2) / 365
+export const ARCS = times(365).map(x => x * INC)
 
 export const LOCATIONS = {
   NL: { lat: 52.090654, lon: 5.092966, name: 'Utrecht' },

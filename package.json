@@ -29,7 +29,6 @@
     "hammerjs": "^2.0.8",
     "normalize.css": "^8.0.1",
     "popmotion": "^8.6.9",
-    "three": "^0.104.0",
-    "use-debounce": "^2.0.2"
+    "three": "^0.104.0"
   }
 }
