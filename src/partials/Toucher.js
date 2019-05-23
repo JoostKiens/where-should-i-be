@@ -15,7 +15,7 @@ export const Toucher = ({ style }) => {
 
   useEffect(() => {
     function handlePan({ deltaX }) {
-      dispatch({ type: 'incrementAngle', increment: deltaX * 0.0001 })
+      dispatch({ type: 'incrementArc', increment: deltaX * 0.0001 })
     }
 
     function handleSwipe({ velocityX }) {
@@ -25,7 +25,7 @@ export const Toucher = ({ style }) => {
     function updateVelocity(vel) {
       let id
       if (Math.abs(vel) > 0.02) {
-        dispatch({ type: 'incrementAngle', increment: vel * 0.01 })
+        dispatch({ type: 'incrementArc', increment: vel * 0.01 })
         id = window.requestAnimationFrame(() => updateVelocity(vel * 0.95))
       } else {
         window.cancelAnimationFrame(id)

@@ -1,12 +1,12 @@
-export const initialState = { angle: 0 }
+export const initialState = { arc: 0 }
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case 'incrementAngle':
+    case 'incrementArc':
       return {
         ...state,
-        // normalize angle, always between 0 and 2*Math.PI
-        angle: (state.angle + action.increment + Math.PI * 2) % (Math.PI * 2),
+        // normalize arc, always between 0 and 2*Math.PI
+        arc: (state.arc + action.increment + Math.PI * 2) % (Math.PI * 2),
       }
     default:
       return state

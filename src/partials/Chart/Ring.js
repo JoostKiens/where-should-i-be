@@ -23,14 +23,14 @@ export const Ring = props => {
   )
 
   const { getEntity } = useThree(setup)
-  const [{ angle }] = useStateValue()
+  const [{ arc }] = useStateValue()
 
   useEffect(() => {
     const ring = getEntity()
-    ring.rotation.z = angle
+    ring.rotation.z = arc
     ring.updateMatrix()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [angle])
+  }, [arc])
 
   return null
 }

@@ -10,9 +10,9 @@ import {
   Vector2,
 } from 'three'
 
-const SPACING = 0.001
-const INNER_RADIUS = 10
-const OUTER_RADIUS = 11
+const SPACING = 0.005
+const INNER_RADIUS = 11
+const OUTER_RADIUS = 12
 const SEGMENT_ARC = (Math.PI * 2) / 365 - SPACING
 const HALF_SEGMENT_ARC = SEGMENT_ARC / 2
 const CHART_HEIGHT = 4
