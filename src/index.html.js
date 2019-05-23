@@ -1,3 +1,4 @@
+import '/styles/global.css'
 import { Error } from '/partials/Error'
 import { getDocs } from '/data/doc'
 import { head } from '/partials/head'

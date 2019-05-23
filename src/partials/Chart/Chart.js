@@ -4,21 +4,18 @@ import { min, max } from 'd3-array'
 import { Ring } from './Ring'
 import SceneManager from '/machinery/ThreeJSManager'
 
-export const Chart = props => {
-  const lowMin = min(props.docs, ({ temperatureMin }) => temperatureMin)
-  const highMax = max(props.docs, ({ temperatureMax }) => temperatureMax)
-  const colorScale = createColorScale(props.docs)
-  const [docsNL, docsTH] = splitByLocation(props.docs).map(sortByTime)
+export const Chart = ({ docs, style }) => {
+  const lowMin = min(docs, ({ temperatureMin }) => temperatureMin)
+  const highMax = max(docs, ({ temperatureMax }) => temperatureMax)
+  const colorScale = createColorScale(docs)
+  const [docsNL, docsTH] = splitByLocation(docs).map(sortByTime)
 
   return (
     <SceneManager
       getCamera={getCamera}
       getRenderer={getRenderer}
       getScene={getScene}
-      canvasStyle={{
-        width: '100%',
-        height: '100%',
-      }}
+      canvasStyle={style}
     >
       <Ring
         docs={docsNL}
@@ -48,6 +45,6 @@ function splitByLocation(docs) {
   )
 }
 
-function sortByTime(docs) {
-  return docs.sort((a, b) => a.time - b.time)
+function sortByTime(arr) {
+  return arr.sort((a, b) => a.time - b.time)
 }

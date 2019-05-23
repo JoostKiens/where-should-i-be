@@ -8,6 +8,12 @@ export function head(title) {
   return (
     <head>
       <title>{title}</title>
+      <link
+        href={
+          'https://fonts.googleapis.com/css?family=Lato:400,700&display=swap'
+        }
+        rel="stylesheet"
+      />
       {stylesheet}
       {rollbar({ accessToken: config.rollbar.accessToken })}
       {polyfill(['default', 'es2015', 'es2016', 'es2017', 'fetch'])}

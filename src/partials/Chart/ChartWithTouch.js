@@ -1,5 +1,6 @@
-import { Chart } from './Chart'
-import { Toucher } from './Toucher'
+import { Chart } from 'partials/Chart/Chart'
+import { Toucher } from '/partials/Toucher'
+import { Hud } from '/partials/Hud/Hud'
 
 const coverStyle = {
   width: '100%',

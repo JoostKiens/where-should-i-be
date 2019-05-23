@@ -1,0 +1,14 @@
+.main {
+  user-select: none;
+
+  &::before {
+    content: '';
+    height: 100%;
+    width: 1px;
+    background-color: white;
+    opacity: 0.4;
+    position: absolute;
+    top: 0;
+    left: 50%;
+  }
+}

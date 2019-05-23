@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useStateValue } from '/machinery/state'
 const Hammer = typeof window !== 'undefined' ? require('hammerjs') : undefined
 
-export const Toucher = ({ coverStyle }) => {
+export const Toucher = ({ style }) => {
   const [, dispatch] = useStateValue()
   const [mc, setMc] = useState(null)
   const el = useRef(null)
@@ -45,5 +45,5 @@ export const Toucher = ({ coverStyle }) => {
     }
   }, [mc, dispatch])
 
-  return <div style={coverStyle} ref={el} />
+  return <div style={style} ref={el} />
 }

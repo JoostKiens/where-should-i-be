@@ -1,18 +1,19 @@
 import { useStateValue } from '/machinery/state'
 import { useDebounce } from 'use-debounce'
 import { useEffect, useState } from 'react'
+import styles from './Hud.css'
 
-export const Hud = ({ docs }) => {
+export const Hud = ({ docs, style }) => {
   const [selected, setSelected] = useState()
   const [{ angle }] = useStateValue()
-  const [debouncedAngle] = useDebounce(angle, 15)
+  const [debouncedAngle] = useDebounce(angle, 6)
 
   useEffect(() => {
     setSelected(determineSelected(debouncedAngle, docs))
   }, [debouncedAngle, docs])
 
   return (
-    <div>
+    <div style={style} className={styles.main}>
       <h1>
         {selected && new Date(selected.NL.time).toDateString()}
         <br />

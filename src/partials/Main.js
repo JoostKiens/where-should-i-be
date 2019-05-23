@@ -1,18 +1,25 @@
-import { ChartWithTouch } from '/partials/Chart/ChartWithTouch'
+import { Chart } from '/partials/Chart/Chart'
+import { Toucher } from '/partials/Toucher'
 import { Hud } from '/partials/Hud/Hud'
 import { useEffect, useState } from 'react'
 import { StateProvider } from '/machinery/state'
 import { reducer, initialState } from '/store'
+import { enrichDocs } from '/enrichDocs'
 
-import { min, max } from 'd3-array'
-import { createTimeToAngleScale } from '/partials/Chart/createChartScales'
+const coverStyle = {
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  left: 0,
+  top: 0,
+}
 
 export default function Main({ docs }) {
   const [isMounted, setIsMounted] = useState(false)
 
   // also need to add weights for niceness
   // @TODO we should do this before we store on server
-  const docsWithArc = addArcToDocs(docs)
+  const docsWithArc = enrichDocs(docs)
 
   useEffect(() => {
     setIsMounted(true)
@@ -21,20 +28,15 @@ export default function Main({ docs }) {
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <h1>Charts</h1>
-      <Hud docs={docsWithArc} />
-      {!isMounted ? null : <ChartWithTouch docs={docsWithArc} />}
+      {!isMounted ? null : <Scene docs={docsWithArc} />}
     </StateProvider>
   )
 }
 
-function addArcToDocs(docs) {
-  const arcScale = createTimeToAngleScale(
-    min(docs, x => x.time),
-    max(docs, x => x.time)
-  )
-  return docs.map((doc, index) => ({
-    ...doc,
-    arc: arcScale(doc.time),
-  }))
-}
+const Scene = ({ docs }) => (
+  <div style={{ position: 'relative', width: `100vw`, height: `100vh` }}>
+    <Chart docs={docs} style={coverStyle} />
+    <Hud docs={docs} style={coverStyle} />
+    <Toucher style={coverStyle} />
+  </div>
+)
