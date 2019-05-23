@@ -1,4 +1,4 @@
-import { scaleLinear, scaleSequential } from 'd3-scale'
+import { scaleLinear, scaleSequential, scaleTime } from 'd3-scale'
 import { extent } from 'd3-array'
 import { interpolateRdYlBu } from 'd3-scale-chromatic'
 
@@ -17,4 +17,10 @@ export function createHeightScale(lowMin, highMax, chartHeight) {
   return scaleLinear()
     .domain([lowMin, highMax])
     .range([chartHeight / 10, chartHeight / 2])
+}
+
+export function createTimeToAngleScale(oldest, newest) {
+  return scaleTime()
+    .domain([oldest, newest])
+    .range([Math.PI * 2, 0])
 }

@@ -1,7 +1,8 @@
 import { createSegments } from './createSegments'
 import { Group } from 'three'
-import { useCallback } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useThree } from '/machinery/ThreeJSManager/'
+import { useStateValue } from '/machinery/state'
 
 export const Ring = props => {
   const setup = useCallback(
@@ -23,7 +24,15 @@ export const Ring = props => {
     [props]
   )
 
-  useThree(setup)
+  const { getEntity } = useThree(setup)
+  const [{ angle }] = useStateValue()
+
+  useEffect(() => {
+    const ring = getEntity()
+    ring.rotation.z = angle
+    ring.updateMatrix()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [angle])
 
   // useEffect(() => {
   //   const ring = getEntity()

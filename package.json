@@ -20,19 +20,16 @@
   },
   "dependencies": {
     "@kaliber/build": "*",
-    "cross-browser-resize": "^1.0.3",
     "d3-array": "^2.0.3",
     "d3-scale": "^3.0.0",
     "d3-scale-chromatic": "^1.3.3",
     "d3-shape": "^1.3.5",
     "firebase": "^5.11.0",
     "firebase-admin": "^7.3.0",
-    "memoize-one": "^5.0.4",
-    "node-cache": "^4.2.0",
+    "hammerjs": "^2.0.8",
     "normalize.css": "^8.0.1",
     "popmotion": "^8.6.9",
-    "react-hammerjs": "^1.0.1",
-    "react-use": "^9.0.0",
-    "three": "^0.104.0"
+    "three": "^0.104.0",
+    "use-debounce": "^2.0.2"
   }
 }
