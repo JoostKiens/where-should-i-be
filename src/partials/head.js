@@ -18,6 +18,10 @@ export function head(title) {
       {rollbar({ accessToken: config.rollbar.accessToken })}
       {polyfill(['default', 'es2015', 'es2016', 'es2017', 'fetch'])}
       {javascript}
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, user-scalable=no"
+      />
     </head>
   )
 }
