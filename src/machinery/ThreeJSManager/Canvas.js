@@ -3,6 +3,7 @@ import { forwardRef, useEffect } from 'react'
 const Canvas = ({ style }, ref) => {
   useEffect(() => {
     const onWindowResize = () => {
+      // @TODO add debounce
       ref.current.style.width = style.width
       ref.current.style.height = style.height
     }

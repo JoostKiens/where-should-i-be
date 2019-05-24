@@ -2205,6 +2205,10 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
+cross-browser-resize@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/cross-browser-resize/-/cross-browser-resize-1.0.3.tgz#c86bae79ba32483187fb8d0408af44b0e9e33ae5"
+
 cross-spawn@^4.0.0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-4.0.2.tgz#7b9247621c23adfdd3856004a823cbe397424d41"

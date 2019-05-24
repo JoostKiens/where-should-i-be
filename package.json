@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@kaliber/build": "*",
+    "cross-browser-resize": "^1.0.3",
     "d3-array": "^2.0.3",
     "d3-scale": "^3.0.0",
     "d3-scale-chromatic": "^1.3.3",
