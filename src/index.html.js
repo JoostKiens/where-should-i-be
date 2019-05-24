@@ -26,7 +26,11 @@ export default function main({ data }) {
     <html lang="en">
       {head('Rendered on server')}
       <body>
-        {data.error || data.missing ? <Error /> : <Main docs={data.docs} />}
+        {data.error || data.missing ? (
+          <Error />
+        ) : (
+          <Main universalContainerProps={{ id: 'main' }} docs={data.docs} />
+        )}
       </body>
     </html>
   )
