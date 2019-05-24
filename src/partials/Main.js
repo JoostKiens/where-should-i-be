@@ -5,8 +5,9 @@ import { useEffect, useState } from 'react'
 import { StateProvider } from '/machinery/state'
 import { reducer, initialState } from '/store'
 import { enrichDocs } from '/enrichDocs'
+import styles from './Main.css'
 
-const coverStyle = {
+const childStyle = {
   width: '100%',
   height: '100%',
   position: 'absolute',
@@ -35,9 +36,9 @@ export default function Main({ docs }) {
 }
 
 const Scene = ({ docs }) => (
-  <div style={{ position: 'relative', width: `100%`, height: `100%` }}>
-    <Chart docs={docs} style={coverStyle} />
-    <Hud docs={docs} style={coverStyle} />
-    <Toucher style={coverStyle} />
-  </div>
+  <main className={styles.main}>
+    <Chart docs={docs} style={childStyle} />
+    <Hud docs={docs} style={childStyle} />
+    <Toucher style={childStyle} />
+  </main>
 )
