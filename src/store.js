@@ -11,17 +11,18 @@ export const reducer = (state, action) => {
         arc: (state.arc + action.value + Math.PI * 2) % (Math.PI * 2),
       }
     case 'snapTo':
-      // snapIndex is the index of the array of ARCS to snap to
+      const { index: arcIndex } = ARCS.reduce(
+        (res, curr, index) => {
+          return Math.abs(curr - state.arc) < Math.abs(res.arc - state.arc)
+            ? { arc: curr, index }
+            : res
+        },
+        { arc: 0, index: 0 }
+      )
+
       return {
         ...state,
-        snapIndex: ARCS.reduce(
-          (res, curr, index) => {
-            return Math.abs(curr - state.arc) < Math.abs(res.arc - state.arc)
-              ? { arc: curr, index }
-              : res
-          },
-          { arc: 0, index: 0 }
-        ),
+        snapIndex: arcIndex,
       }
     case 'isPanning':
       return {
