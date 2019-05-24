@@ -1,2 +1,4 @@
 @import 'normalize.css';
 @import './type.css';
+
+html, body, body > div { height: 100%; }
