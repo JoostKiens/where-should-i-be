@@ -5,11 +5,11 @@ import styles from './Hud.css'
 
 export const Hud = ({ docs, style }) => {
   const [selected, setSelected] = useState()
-  const [{ snapArc }] = useStateValue()
+  const [{ snapIndex }] = useStateValue()
 
   useEffect(() => {
-    setSelected(determineSelected(snapArc, docs))
-  }, [snapArc, docs])
+    setSelected(determineSelected(snapIndex, docs))
+  }, [snapIndex, docs])
 
   return !selected ? null : (
     <div style={style} className={styles.main}>
@@ -23,9 +23,7 @@ export const Hud = ({ docs, style }) => {
   )
 }
 
-const determineSelected = (arc, docs) => {
-  const [NL, TH] = docs
-    .filter(x => x.arc === arc)
-    .sort((a, b) => (a.locationID < b.locationID ? -1 : 1))
-  return { NL, TH }
-}
+const determineSelected = (index, docs) => ({
+  NL: docs[index * 2],
+  TH: docs[index * 2 + 1],
+})

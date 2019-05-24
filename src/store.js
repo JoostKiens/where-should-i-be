@@ -1,6 +1,6 @@
 import { ARCS } from '/constants'
 
-export const initialState = { arc: 0, snapArc: 0, isPanning: false }
+export const initialState = { arc: 0, snapIndex: 0, isPanning: false }
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -11,11 +11,16 @@ export const reducer = (state, action) => {
         arc: (state.arc + action.value + Math.PI * 2) % (Math.PI * 2),
       }
     case 'snapTo':
+      // snapIndex is the index of the array of ARCS to snap to
       return {
         ...state,
-        // @TODO should this not return an index for easier snapability?
-        snapArc: ARCS.reduce((res, curr) =>
-          Math.abs(curr - state.arc) < Math.abs(res - state.arc) ? curr : res
+        snapIndex: ARCS.reduce(
+          (res, curr, index) => {
+            return Math.abs(curr - state.arc) < Math.abs(res.arc - state.arc)
+              ? { arc: curr, index }
+              : res
+          },
+          { arc: 0, index: 0 }
         ),
       }
     case 'isPanning':
