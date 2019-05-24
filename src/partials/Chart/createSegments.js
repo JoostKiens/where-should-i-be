@@ -19,13 +19,8 @@ const CHART_HEIGHT = 4
 
 export const createSegments = ({ docs }) => {
   const material = new MeshLambertMaterial({ flatShading: true })
-  const lowMin = min(docs, ({ temperatureMin }) => temperatureMin)
-  const highMax = max(docs, ({ temperatureMax }) => temperatureMax)
   const geometry = createGeometry()
-  const heightScale = scaleLinear()
-    .domain([lowMin, highMax])
-    .range([CHART_HEIGHT / 10, CHART_HEIGHT / 2])
-
+  const heightScale = createHeightScale(docs)
   const colorScale = createColorScale(docs)
 
   return docs.reduce((res, doc) => {
@@ -91,4 +86,12 @@ const createColorScale = data => {
   return scaleSequential()
     .domain([min + 2, max + 5])
     .interpolator(interpolateRdYlBu)
+}
+
+const createHeightScale = docs => {
+  const lowMin = min(docs, ({ temperatureMin }) => temperatureMin)
+  const highMax = max(docs, ({ temperatureMax }) => temperatureMax)
+  return scaleLinear()
+    .domain([lowMin, highMax])
+    .range([CHART_HEIGHT / 10, CHART_HEIGHT / 2])
 }
