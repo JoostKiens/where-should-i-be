@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useStateValue } from '/machinery/state'
-import { clamp } from '/utils/clamp'
+import { clamp } from '/machinery/clamp'
 const Hammer = typeof window !== 'undefined' ? require('hammerjs') : undefined
 
 const ACCELRATION = 0.95

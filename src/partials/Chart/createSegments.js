@@ -1,5 +1,5 @@
 import { scaleLinear, scaleSequential } from 'd3-scale'
-import { rgb2hex, shadeHexColor } from '/utils/color'
+import { rgb2hex, shadeHexColor } from '/machinery/color'
 import { interpolateRdYlBu } from 'd3-scale-chromatic'
 import { extent, min, max } from 'd3-array'
 import {

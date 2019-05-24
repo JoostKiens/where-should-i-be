@@ -1,4 +1,4 @@
-import { times } from '/utils/array'
+import { times } from '/machinery/array'
 
 export const getUTCTimeForDaysAgo = daysAgo => {
   const now = new Date()

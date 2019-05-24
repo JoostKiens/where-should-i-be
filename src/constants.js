@@ -1,5 +1,5 @@
 import variablesStyles from '/styles/breakpoints.css'
-import { times } from '/utils/array'
+import { times } from '/machinery/array'
 
 const INC = (Math.PI * 2) / 365
 export const ARCS = times(365).map(x => x * INC)
