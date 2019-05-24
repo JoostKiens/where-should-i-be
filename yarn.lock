@@ -6989,6 +6989,10 @@ simple-swizzle@^0.2.2:
   dependencies:
     is-arrayish "^0.3.1"
 
+skycons@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/skycons/-/skycons-1.0.0.tgz#afb160c5901470aae84676fbc38bbd7dd5b69d8f"
+
 slice-ansi@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-2.1.0.tgz#cacd7693461a637a5788d92a7dd4fba068e81636"
@@ -7704,10 +7708,6 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
-
-use-debounce@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-2.0.2.tgz#dd73c523d43460bf017c1bd054bcae66333747e3"
 
 use@^3.1.0:
   version "3.1.1"
