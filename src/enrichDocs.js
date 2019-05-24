@@ -14,6 +14,7 @@ const addExtraToDocs = docs => {
 }
 
 export const enrichDocs = docs => {
+  // @TODO custom props go in data object
   const docsWithExtra = addExtraToDocs(docs)
   return sortByTime(docsWithExtra)
 }

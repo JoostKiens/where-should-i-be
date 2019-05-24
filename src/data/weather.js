@@ -2,6 +2,8 @@ import config from '@kaliber/config'
 import { LOCATIONS } from '/constants'
 
 export const getWeather = ({ time, locationID }) => {
+  // @TODO enrichData
+  // @TODO our properties in custom data obj
   const apiEndpoint = getApiEndpoint(time, locationID)
   return fetch(apiEndpoint, { method: 'GET' })
     .then(handleErrors)

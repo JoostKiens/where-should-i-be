@@ -19,6 +19,7 @@ export default function Main({ docs }) {
 
   // also need to add weights for niceness
   // @TODO we should do this before we store on server
+  // @TODO should we useViewport? How do we prevent Chart & Toucher from re-rendering?
   const enrichedDocs = enrichDocs(docs)
 
   useEffect(() => {
@@ -34,7 +35,7 @@ export default function Main({ docs }) {
 }
 
 const Scene = ({ docs }) => (
-  <div style={{ position: 'relative', width: `100vw`, height: `100vh` }}>
+  <div style={{ position: 'relative', width: `100%`, height: `100%` }}>
     <Chart docs={docs} style={coverStyle} />
     <Hud docs={docs} style={coverStyle} />
     <Toucher style={coverStyle} />

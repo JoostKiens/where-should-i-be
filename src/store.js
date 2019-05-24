@@ -13,6 +13,7 @@ export const reducer = (state, action) => {
     case 'snapTo':
       return {
         ...state,
+        // @TODO should this not return an index for easier snapability?
         snapArc: ARCS.reduce((res, curr) =>
           Math.abs(curr - state.arc) < Math.abs(res - state.arc) ? curr : res
         ),

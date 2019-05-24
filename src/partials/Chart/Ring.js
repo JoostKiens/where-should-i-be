@@ -14,6 +14,7 @@ export const Ring = props => {
       ring.rotation.x = -Math.PI / 2.1
       ring.matrixAutoUpdate = false
       ring.updateMatrix()
+      // @TODO make 2 groups for each country for animation purposes
       const segments = createSegments(props)
       segments.forEach(x => ring.add(x))
       scene.add(ring)

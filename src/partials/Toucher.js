@@ -15,6 +15,7 @@ export const Toucher = ({ style }) => {
 
   useEffect(() => {
     function handlePan({ deltaX }) {
+      // @TODO clamp deltaX
       dispatch({ type: 'incrementArc', value: deltaX * 0.0001 })
       dispatch({ type: 'snapTo' })
     }
@@ -28,10 +29,10 @@ export const Toucher = ({ style }) => {
       if (Math.abs(vel) > 0.02) {
         dispatch({ type: 'incrementArc', value: vel * 0.01 })
         dispatch({ type: 'isPanning', value: true })
+        dispatch({ type: 'snapTo' })
         id = window.requestAnimationFrame(() => updateVelocity(vel * 0.95))
       } else {
         window.cancelAnimationFrame(id)
-        dispatch({ type: 'snapTo' })
         dispatch({ type: 'isPanning', value: false })
       }
     }
