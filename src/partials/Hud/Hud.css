@@ -12,3 +12,18 @@
     left: 50%;
   }
 }
+
+.cardTH,
+.cardNL {
+  position: absolute;
+}
+
+.cardTH {
+  top: 20px;
+  left: 20px;
+}
+
+.cardNL {
+  bottom: 20px;
+  right: 20px;
+}
