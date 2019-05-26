@@ -10,7 +10,7 @@ export function head(title) {
       <title>{title}</title>
       <link
         href={
-          'https://fonts.googleapis.com/css?family=Lato:400,700&display=swap'
+          'https://fonts.googleapis.com/css?family=Lato:400,900&display=swap'
         }
         rel="stylesheet"
       />

@@ -3,11 +3,11 @@ import { useStateValue } from '/machinery/state'
 import { clamp } from '/machinery/clamp'
 const Hammer = typeof window !== 'undefined' ? require('hammerjs') : undefined
 
-const ACCELRATION = 0.95
+const ACCELERATION = 0.975
 const PAN_FACTOR = 0.00004
 const MAX_PAN_VELOCITY = 200
 const SWIPE_FACTOR = 0.01
-const BRAKE_VELOCITY = 0.02
+const BRAKE_VELOCITY = 0.07
 
 export const Toucher = ({ style }) => {
   const [, dispatch] = useStateValue()
@@ -38,7 +38,7 @@ export const Toucher = ({ style }) => {
         dispatch({ type: 'isPanning', value: true })
         dispatch({ type: 'snapTo' })
         id = window.requestAnimationFrame(() =>
-          updateVelocity(velocity * ACCELRATION)
+          updateVelocity(velocity * ACCELERATION)
         )
       } else {
         window.cancelAnimationFrame(id)

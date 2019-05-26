@@ -3,41 +3,61 @@ import styles from './Card.css'
 import { icons } from './Icons'
 
 export const Card = ({ data }) => {
-  const Icon = icons[data.icon]
-  const precip = Math.round(data.precipIntensity * 24 * 10) / 10
+  const Icon = data.icon ? icons[data.icon] : null
+  const Compass = icons.compass
+  const precip = Math.round(data.precipIntensity || 0 * 24 * 10) / 10
 
-  // windBearing
   return (
     <article className={styles.main}>
-      <h3>
-        {LOCATIONS[data.locationID].name}, {data.locationID}
-      </h3>
-      <div className={styles.icon}>
-        <Icon />
+      <div className={styles.header}>
+        <h1 className={styles.location}>
+          {LOCATIONS[data.locationID].name}, {data.locationID}
+        </h1>
+        <div className={styles.weather}>
+          <div className={styles.tempMin}>
+            {Math.round(data.temperatureMin)}
+            <Degrees />
+          </div>
+          <div className={styles.tempMax}>
+            {Math.round(data.temperatureMax)}
+            <Degrees />
+          </div>
+          <div className={styles.icon}>
+            <Icon />
+          </div>
+        </div>
       </div>
-      <div>
-        Min. Temp: {Math.round(data.temperatureMin)} <Degrees />
-      </div>
-      <div>
-        Max. Temp: {Math.round(data.temperatureMax)} <Degrees />
-      </div>
-      <div>Cloud cover: {toPercentage(data.cloudCover)}</div>
-      <div>Humidity: {toPercentage(data.humidity)}</div>
-      <div>
-        Windspeed: {Math.round(data.windSpeed)}{' '}
-        <abbr className={styles.abbr} title="Meters per second">
-          m/s
-        </abbr>
-      </div>
+      <footer className={styles.meta}>
+        <div className={styles.metaItem}>
+          <span>Cloud cover:</span> <span>{toPercentage(data.cloudCover)}</span>
+        </div>
+        <div className={styles.metaItem}>
+          <span>Wind:</span>{' '}
+          <span>
+            <span className={styles.windCompass}>
+              <Compass
+                style={{ transform: `rotate(${data.windBearing}deg)` }}
+              />
+            </span>
+            {Math.round(data.windSpeed)}{' '}
+            <abbr className={styles.abbr} title="Meters per second">
+              m/s
+            </abbr>
+          </span>
+        </div>
+        <div className={styles.metaItem}>
+          <span>Rain fall: {precip + ' mm'}</span>
+        </div>
+      </footer>
+
       <p className={styles.summary}>{data.summary}</p>
-      {precip > 0 && <span>Rain fall {precip + ' mm'}</span>}
     </article>
   )
 }
 
 const Degrees = () => (
   <abbr className={styles.abbr} title="Degrees Celsius">
-    °C
+    °
   </abbr>
 )
 

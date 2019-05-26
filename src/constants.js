@@ -15,3 +15,21 @@ export const BREAKPOINTS = {
   LG: parseInt(variablesStyles.breakpointLg, 10),
   XL: parseInt(variablesStyles.breakpointXl, 10),
 }
+
+export const CHART_MAX_TEMP = 40
+export const CHART_MIN_TEMP = -10
+
+export const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]

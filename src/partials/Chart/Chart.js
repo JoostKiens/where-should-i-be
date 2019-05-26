@@ -1,5 +1,6 @@
 import { getCamera, getRenderer, getScene } from './threeSetup'
 import { Ring } from './Ring'
+import { Scale } from './Scale'
 import SceneManager from '/machinery/ThreeJSManager'
 
 export const Chart = ({ docs, style }) => {
@@ -11,6 +12,7 @@ export const Chart = ({ docs, style }) => {
       canvasStyle={style}
     >
       <Ring docs={docs} />
+      <Scale docs={docs} />
     </SceneManager>
   )
 }

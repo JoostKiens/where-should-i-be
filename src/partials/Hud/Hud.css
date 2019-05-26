@@ -1,29 +1,57 @@
 .main {
   user-select: none;
+  font-size: 1.2rem;
+}
 
-  &::before {
-    content: '';
-    height: 100%;
-    width: 1px;
-    background-color: white;
-    opacity: 0.4;
-    position: absolute;
-    top: 0;
-    left: 50%;
-  }
+.selectedDate,
+.cardTH,
+.cardNL,
+.indicator,
+.minTemp,
+.maxTemp {
+  position: absolute;
 }
 
 .cardTH,
 .cardNL {
-  position: absolute;
+  width: 100%;
 }
 
 .cardTH {
-  top: 20px;
-  left: 20px;
+  top: 0;
+  left: 0;
 }
 
 .cardNL {
-  bottom: 20px;
-  right: 20px;
+  bottom: 0;
+  right: 0;
+}
+
+.indicator {
+  left: 50%;
+  top: 130px;
+  transform: translateX(-50%);
+}
+
+.selectedDate {
+  display: block;
+  width: 100%;
+  text-align: center;
+  top: 54%;
+  text-transform: uppercase;
+  color: #aaa;
+}
+
+.minTemp,
+.maxTemp {
+  left: 53%;
+  opacity: 0.6;
+}
+
+.minTemp {
+  top: 47.5%;
+}
+
+.maxTemp {
+  top: 21.5%;
 }

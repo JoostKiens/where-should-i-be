@@ -1,27 +1,31 @@
 import { scaleLinear, scaleSequential } from 'd3-scale'
 import { rgb2hex, shadeHexColor } from '/machinery/color'
 import { interpolateRdYlBu } from 'd3-scale-chromatic'
-import { extent, min, max } from 'd3-array'
+import { extent } from 'd3-array'
+import { CHART_MAX_TEMP, CHART_MIN_TEMP } from '/constants'
 import {
   Shape,
   ExtrudeBufferGeometry,
   MeshLambertMaterial,
   Mesh,
   Vector2,
+  Matrix4,
 } from 'three'
 
 const SPACING = 0.005
-const INNER_RADIUS = 11
-const OUTER_RADIUS = 12
+const INNER_RADIUS = 9
+const OUTER_RADIUS = 10
 const SEGMENT_ARC = (Math.PI * 2) / 365 - SPACING
 const HALF_SEGMENT_ARC = SEGMENT_ARC / 2
-const CHART_HEIGHT = 4
 
+// @TODO triple check temp scale (do not make a circle, hold next to scale)
 export const createSegments = ({ docs }) => {
   const material = new MeshLambertMaterial({ flatShading: true })
   const geometry = createGeometry()
-  const heightScale = createHeightScale(docs)
+  geometry.applyMatrix(new Matrix4().makeTranslation(0, 0, -0.5))
+  const heightScale = createHeightScale()
   const colorScale = createColorScale(docs)
+  const chartTempRange = CHART_MAX_TEMP - CHART_MIN_TEMP
 
   return docs.reduce((res, doc) => {
     const { temperatureMax, temperatureMin, arc, avg } = doc
@@ -29,8 +33,8 @@ export const createSegments = ({ docs }) => {
       {
         arc,
         color: rgb2hex(colorScale(avg)),
-        height: heightScale(temperatureMax - temperatureMin),
-        offset: heightScale(temperatureMin),
+        height: (temperatureMax - temperatureMin) / chartTempRange,
+        offset: heightScale(avg),
       },
       geometry,
       material
@@ -52,7 +56,7 @@ const createMesh = ({ color, arc, height, offset }, geometry, material) => {
 
   mesh.rotation.z = arc
   mesh.position.set(0, 0, offset)
-  mesh.scale.set(0.2, 0.2, 0.2 * height)
+  mesh.scale.set(1, 1, height)
   mesh.visible = true
   return mesh
 }
@@ -88,10 +92,7 @@ const createColorScale = data => {
     .interpolator(interpolateRdYlBu)
 }
 
-const createHeightScale = docs => {
-  const lowMin = min(docs, ({ temperatureMin }) => temperatureMin)
-  const highMax = max(docs, ({ temperatureMax }) => temperatureMax)
-  return scaleLinear()
-    .domain([lowMin, highMax])
-    .range([CHART_HEIGHT / 10, CHART_HEIGHT / 2])
-}
+const createHeightScale = () =>
+  scaleLinear()
+    .domain([CHART_MIN_TEMP, CHART_MAX_TEMP])
+    .range([-0.5, 0.5])

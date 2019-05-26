@@ -4,6 +4,7 @@ import { useCallback, useEffect } from 'react'
 import { useThree } from '/machinery/ThreeJSManager/'
 import { useStateValue } from '/machinery/state'
 import { useViewport } from '/machinery/useViewport'
+import { ARCS } from '/constants'
 
 export const Ring = props => {
   const { viewportSm } = useViewport()
@@ -11,8 +12,8 @@ export const Ring = props => {
     context => {
       const { scene } = context
       const ring = new Group()
-      ring.position.set(0, -1, 0)
-      ring.rotation.x = -Math.PI / 2.1
+      ring.scale.set(0.2, 0.2, 0.8)
+      ring.rotation.x = -Math.PI / 2
       ring.matrixAutoUpdate = false
       ring.updateMatrix()
       // @TODO make 2 groups for each country for animation purposes
@@ -25,20 +26,23 @@ export const Ring = props => {
   )
 
   const { getEntity } = useThree(setup)
-  const [{ arc }] = useStateValue()
+  const [{ snapIndex }] = useStateValue()
 
   useEffect(() => {
     const ring = getEntity()
-    ring.rotation.z = arc
+    ring.rotation.z = ARCS[snapIndex] + Math.PI
     ring.updateMatrix()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [arc])
+  }, [snapIndex])
 
   useEffect(() => {
+    // @TODO handle different viewports, share with Indicator
     const ring = getEntity()
-    const scaleFactor = viewportSm ? 1 : 0.8
-    ring.scale.set(scaleFactor, scaleFactor, scaleFactor)
-    ring.translateY = -200
+    // const scaleFactor = viewportSm ? 1 : 0.9
+    // const scaleFactorZ = viewportSm ? 1 : 0.7
+    const yOffset = viewportSm ? 1 : 0.45
+    // ring.scale.set(scaleFactor, scaleFactor, scaleFactorZ)
+    ring.position.set(0, yOffset, 0)
     ring.updateMatrix()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewportSm])

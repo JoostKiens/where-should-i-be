@@ -1,18 +1,19 @@
 // http://adamwhitcroft.com/climacons/
 
-const Svg = ({ children }) => (
+const Svg = ({ children, style }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="100"
     height="100"
-    viewBox="20 20  70 70"
+    viewBox="0 0  100 100"
+    style={style}
   >
     {children}
   </svg>
 )
 
-const Fog = () => (
-  <Svg>
+const Fog = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -21,8 +22,8 @@ const Fog = () => (
   </Svg>
 )
 
-const ClearDay = () => (
-  <Svg>
+const ClearDay = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -30,8 +31,8 @@ const ClearDay = () => (
     />
   </Svg>
 )
-const ClearNight = () => (
-  <Svg>
+const ClearNight = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -40,8 +41,8 @@ const ClearNight = () => (
   </Svg>
 )
 
-const PartlyCloudyDay = () => (
-  <Svg>
+const PartlyCloudyDay = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -50,8 +51,8 @@ const PartlyCloudyDay = () => (
   </Svg>
 )
 
-const PartlyCloudyNight = () => (
-  <Svg>
+const PartlyCloudyNight = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -59,8 +60,8 @@ const PartlyCloudyNight = () => (
     />
   </Svg>
 )
-const Cloudy = () => (
-  <Svg>
+const Cloudy = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -68,8 +69,9 @@ const Cloudy = () => (
     />
   </Svg>
 )
-const Rain = () => (
-  <Svg>
+
+const Rain = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -78,8 +80,8 @@ const Rain = () => (
   </Svg>
 )
 
-const Sleet = () => (
-  <Svg>
+const Sleet = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -88,8 +90,8 @@ const Sleet = () => (
   </Svg>
 )
 
-const Snow = () => (
-  <Svg>
+const Snow = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -98,12 +100,22 @@ const Snow = () => (
   </Svg>
 )
 
-const Wind = () => (
-  <Svg>
+const Wind = ({ style }) => (
+  <Svg style={style}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
       d="M76.746 69.588v.051h-3.749a2 2 0 0 1 0-3.999h3a2 2 0 0 0 0-3.999 2 2 0 1 1 .402-3.959c3.122.211 5.597 2.783 5.597 5.958a5.999 5.999 0 0 1-5.25 5.948zM65.998 57.641a2 2 0 1 1 .403-3.959c3.121.211 5.596 2.783 5.596 5.959a5.996 5.996 0 0 1-5.249 5.947v.052H44.001a2 2 0 0 0 0 3.999h22.747v.053a5.996 5.996 0 0 1 5.249 5.947c0 3.175-2.475 5.747-5.596 5.958a2 2 0 1 0-.403-7.958H43.251v-.052a5.998 5.998 0 0 1-5.25-5.948c0-1.055.294-2.032.773-2.89-6.265-2.168-10.771-8.104-10.771-15.107 0-8.835 7.162-15.998 15.998-15.998 6.004 0 11.229 3.312 13.965 8.204.664-.114 1.336-.205 2.033-.205 5.896 0 10.788 4.256 11.798 9.862a9.934 9.934 0 0 0-4.849-1.815 7.99 7.99 0 0 0-6.949-4.047c-1.601 0-3.084.48-4.334 1.29-1.231-5.316-5.973-9.29-11.664-9.29-6.627 0-11.999 5.372-11.999 11.999 0 6.626 5.372 11.999 11.999 11.999h21.997a2 2 0 0 0 0-4z"
+    />
+  </Svg>
+)
+
+export const Compass = ({ style }) => (
+  <Svg style={style}>
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M50 36.002c-7.731 0-13.999 6.268-13.999 13.998 0 7.731 6.268 13.999 13.999 13.999 7.73 0 13.998-6.268 13.998-13.999 0-7.73-6.268-13.998-13.998-13.998zm0 23.997c-5.522 0-9.999-4.477-9.999-9.999 0-5.521 4.477-9.998 9.999-9.998 5.521 0 9.999 4.477 9.999 9.998 0 5.522-4.478 9.999-9.999 9.999zM46 50a4 4 0 0 0 7.999 0c0-2.209-3.999-7.999-3.999-7.999s-4 5.79-4 7.999zm5 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
     />
   </Svg>
 )
@@ -119,4 +131,5 @@ export const icons = {
   snow: Snow,
   rain: Rain,
   wind: Wind,
+  compass: Compass,
 }
