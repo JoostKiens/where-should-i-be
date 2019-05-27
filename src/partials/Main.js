@@ -6,6 +6,7 @@ import { StateProvider } from '/machinery/state'
 import { reducer, initialState } from '/store'
 import { enrichDocs } from '/enrichDocs'
 import styles from './Main.css'
+import { AudioPlayer } from '/partials/AudioPlayer'
 
 const childStyle = {
   width: '100%',
@@ -40,5 +41,6 @@ const Scene = ({ docs }) => (
     <Chart docs={docs} style={childStyle} />
     <Hud docs={docs} style={childStyle} />
     <Toucher style={childStyle} />
+    <AudioPlayer />
   </main>
 )

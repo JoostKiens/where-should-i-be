@@ -5,6 +5,7 @@ import { useThree } from '/machinery/ThreeJSManager/'
 import { useStateValue } from '/machinery/state'
 import { useViewport } from '/machinery/useViewport'
 import { ARCS } from '/constants'
+import { eventEmitter } from '/machinery/eventEmitter'
 
 export const Ring = props => {
   const { viewportSm } = useViewport()
@@ -32,6 +33,7 @@ export const Ring = props => {
     const ring = getEntity()
     ring.rotation.z = ARCS[snapIndex] + Math.PI
     ring.updateMatrix()
+    eventEmitter.emit('click')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snapIndex])
 
