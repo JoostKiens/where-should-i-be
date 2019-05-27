@@ -9,6 +9,9 @@ const MAX_PAN_VELOCITY = 200
 const SWIPE_FACTOR = 0.01
 const BRAKE_VELOCITY = 0.07
 
+// @TODO cancel animation on touch, at least the swipe animation
+// how? use a raf hook?
+// @TODO try to swipe non-discreet, until velocity is lower than n
 export const Toucher = ({ style }) => {
   const [, dispatch] = useStateValue()
   const [mc, setMc] = useState(null)
@@ -22,8 +25,8 @@ export const Toucher = ({ style }) => {
 
   useEffect(() => {
     function handlePan({ deltaX }) {
-      const velocity = clamp(-MAX_PAN_VELOCITY, MAX_PAN_VELOCITY, deltaX)
-      dispatch({ type: 'incrementArc', value: velocity * PAN_FACTOR })
+      const velocityX = clamp(-MAX_PAN_VELOCITY, MAX_PAN_VELOCITY, deltaX)
+      dispatch({ type: 'incrementArc', value: velocityX * PAN_FACTOR })
       dispatch({ type: 'snapTo' })
     }
 
