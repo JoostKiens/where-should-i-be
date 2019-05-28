@@ -30,7 +30,7 @@ export const Ring = props => {
 
   useEffect(() => {
     const ring = getEntity()
-    ring.rotation.z = ARCS[snapIndex] + Math.PI
+    ring.rotation.z = ARCS[snapIndex]
     ring.updateMatrix()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [snapIndex])
@@ -41,7 +41,7 @@ export const Ring = props => {
     // const scaleFactor = viewportSm ? 1 : 0.9
     // const scaleFactorZ = viewportSm ? 1 : 0.7
     const yOffset = viewportSm ? 1 : 0.45
-    // ring.scale.set(scaleFactor, scaleFactor, scaleFactorZ)
+    // // ring.scale.set(scaleFactor, scaleFactor, scaleFactorZ)
     ring.position.set(0, yOffset, 0)
     ring.updateMatrix()
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -10,6 +10,7 @@ import {
   Mesh,
   Vector2,
   Matrix4,
+  Group,
 } from 'three'
 
 const SPACING = 0.005
@@ -18,20 +19,19 @@ const OUTER_RADIUS = 10
 const SEGMENT_ARC = (Math.PI * 2) / 365 - SPACING
 const HALF_SEGMENT_ARC = SEGMENT_ARC / 2
 
-// @TODO triple check temp scale (do not make a circle, hold next to scale)
 export const createSegments = ({ docs }) => {
   const material = new MeshLambertMaterial({ flatShading: true })
   const geometry = createGeometry()
-  geometry.applyMatrix(new Matrix4().makeTranslation(0, 0, -0.5))
   const heightScale = createHeightScale()
   const colorScale = createColorScale(docs)
   const chartTempRange = CHART_MAX_TEMP - CHART_MIN_TEMP
 
-  return docs.reduce((res, doc) => {
+  const seg = docs.reduce((res, doc, index) => {
     const { temperatureMax, temperatureMin, arc, avg } = doc
     const segment = createMesh(
       {
         arc,
+        index,
         color: rgb2hex(colorScale(avg)),
         height: (temperatureMax - temperatureMin) / chartTempRange,
         offset: heightScale(avg),
@@ -42,9 +42,15 @@ export const createSegments = ({ docs }) => {
 
     return [...res, segment]
   }, [])
+  return seg
 }
 
-const createMesh = ({ color, arc, height, offset }, geometry, material) => {
+const createMesh = (
+  { color, index, height, offset, arc },
+  geometry,
+  material
+) => {
+  const group = new Group()
   const segMaterial = material.clone()
   const shadedColor = shadeHexColor(color, -0.7)
   segMaterial.setValues({
@@ -54,11 +60,13 @@ const createMesh = ({ color, arc, height, offset }, geometry, material) => {
 
   const mesh = new Mesh(geometry, segMaterial)
 
-  mesh.rotation.z = arc
-  mesh.position.set(0, 0, offset)
-  mesh.scale.set(1, 1, height)
-  mesh.visible = true
-  return mesh
+  group.scale.set(1, 1, height)
+  group.rotation.z = 2 * Math.PI - arc
+  group.position.set(0, 0, offset)
+
+  group.visible = true
+  group.add(mesh)
+  return group
 }
 
 const createGeometry = () => {
@@ -74,11 +82,15 @@ const createGeometry = () => {
   ])
 
   // Should we use InstancedBufferGeometry?
-  return new ExtrudeBufferGeometry(shape, {
+  const geometry = new ExtrudeBufferGeometry(shape, {
     bevelEnabled: false,
     depth: 1,
     steps: 1,
   })
+
+  geometry.applyMatrix(new Matrix4().makeRotationZ(Math.PI))
+  geometry.applyMatrix(new Matrix4().makeTranslation(0, 0, -0.5))
+  return geometry
 }
 
 const createColorScale = data => {

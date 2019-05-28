@@ -1,6 +1,6 @@
 import { ARCS } from '/constants'
 
-export const initialState = { arc: 0, snapIndex: 0, isPanning: false }
+export const initialState = { arc: 0, snapIndex: 364, isPanning: false }
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -17,7 +17,7 @@ export const reducer = (state, action) => {
             ? { arc: curr, index }
             : res
         },
-        { arc: 0, index: 0 }
+        { arc: 0, index: 364 }
       )
 
       return {

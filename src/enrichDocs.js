@@ -7,7 +7,7 @@ const addExtraToDocs = docs => {
 
     return {
       ...doc,
-      arc: ARCS.reverse()[arcIndex],
+      arc: ARCS[arcIndex],
       avg: (doc.temperatureMax + doc.temperatureMin) / 2,
     }
   })
