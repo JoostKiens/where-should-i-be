@@ -47,7 +47,7 @@ export const Scale = props => {
 }
 
 const createIndicator = () => {
-  const heightScale = 4
+  const heightScale = 4 // needs to match ring, 0.2 * 4
   const lineHeight = 1
   const indicator = new Group()
   const mat = new MeshBasicMaterial({ color: 0xfefefe })
