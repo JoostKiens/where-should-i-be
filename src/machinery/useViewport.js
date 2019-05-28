@@ -1,10 +1,10 @@
 import { BREAKPOINTS } from '/constants'
 import crossBrowserResize from 'cross-browser-resize'
 import { debounce } from '/machinery/debounce'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useLayoutEffect } from 'react'
 
 export const useViewport = () => {
-  const [mounted, setMounted] = useState(null)
+  const [mounted, setMounted] = useState(false)
   const [viewport, setViewport] = useState(getViewport(mounted))
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export const useViewport = () => {
     return () => setMounted(false)
   }, [])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleResize = debounce(() => {
       if (mounted) setViewport(getViewport(mounted))
     }, 250)
