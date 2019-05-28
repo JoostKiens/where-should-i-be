@@ -1,12 +1,14 @@
 import { forwardRef, useEffect } from 'react'
+import { debounce } from '/machinery/debounce'
 
 const Canvas = ({ style }, ref) => {
   useEffect(() => {
-    const onWindowResize = () => {
-      // @TODO add debounce
-      ref.current.style.width = style.width
-      ref.current.style.height = style.height
-    }
+    const onWindowResize = debounce(() => {
+      if (ref.current) {
+        ref.current.style.width = style.width
+        ref.current.style.height = style.height
+      }
+    }, 160)
 
     window.addEventListener('resize', onWindowResize)
     return () => window.removeEventListener('resize', onWindowResize)
