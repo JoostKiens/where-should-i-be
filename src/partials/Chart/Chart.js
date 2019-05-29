@@ -1,6 +1,6 @@
 import { getCamera, getRenderer, getScene } from './threeSetup'
-import { Ring } from './Ring'
-import { RangeIndicator } from './RangeIndicator'
+import { Ring } from './Ring.three'
+import { RangeIndicator } from './RangeIndicator.three'
 import SceneManager from '/machinery/ThreeJSManager'
 
 export const Chart = ({ docs, style }) => {

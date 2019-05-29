@@ -12,10 +12,11 @@ import { CHART_MAX_TEMP, CHART_MIN_TEMP } from '/constants'
 import { times } from '/machinery/array'
 
 const LINE_WIDTH = 0.02
+const LINE_HEIGHT = 1
+const POSITION_Z = 2.0001
 
-// @TODO rename and refactor
 export const RangeIndicator = props => {
-  const { viewportSm } = useViewport()
+  const { size } = useViewport()
   const setup = useCallback(context => {
     const { scene } = context
     const scale = new Group()
@@ -24,7 +25,7 @@ export const RangeIndicator = props => {
     scale.add(indicator)
 
     // @TODO share scale with Ring
-    scale.position.z = 2.0001
+    scale.position.z = POSITION_Z
     indicator.scale.set(0.2, 0.2, 0.2)
     scale.matrixAutoUpdate = false
     scale.updateMatrix()
@@ -35,59 +36,61 @@ export const RangeIndicator = props => {
   const { getEntity } = useThree(setup)
 
   useEffect(() => {
-    const scale = getEntity()
-    // We need to share these values with ring, move to own file?
-    const yOffset = viewportSm ? 1 : 0.45
-    scale.translateY(yOffset)
-    scale.updateMatrix()
+    const rangeIndicator = getEntity()
+    rangeIndicator.position.y = size.SM ? 1 : 0.45
+    rangeIndicator.updateMatrix()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [viewportSm])
+  }, [size])
 
   return null
 }
 
 const createIndicator = () => {
   const heightScale = 4 // needs to match ring, 0.2 * 4
-  const lineHeight = 1
   const indicator = new Group()
   const mat = new MeshBasicMaterial({ color: 0xfefefe })
   mat.transparent = true
   mat.opacity = 0.6
   const geom = new PlaneBufferGeometry(1, 1, 1, 1)
 
-  const triangleTop = createIndicatorTriangle(mat, geom)
-  triangleTop.position.y = (heightScale * lineHeight) / 2 + 0.24
+  const triangleTop = createTriangle(mat, geom.clone())
+  triangleTop.position.y = (heightScale * LINE_HEIGHT) / 2 + 0.24
   indicator.add(triangleTop)
 
-  const line = new Mesh(
-    geom.clone().scale(LINE_WIDTH, lineHeight + 0.14, 1),
-    mat
-  )
+  const line = createLine(mat, geom.clone())
   line.scale.set(1, heightScale, 1)
   indicator.add(line)
 
-  const tickGeom = geom.clone()
-  tickGeom.applyMatrix(new Matrix4().makeTranslation(0.5, 0, 0))
-  tickGeom.scale(0.14, LINE_WIDTH, 1)
+  const ticks = createTicks(mat, geom.clone(), heightScale)
+  ticks.map(x => indicator.add(x))
 
-  times(Math.ceil((CHART_MAX_TEMP - CHART_MIN_TEMP) / 10) + 1).forEach(
-    (val, _, arr) => {
-      const tick = new Mesh(tickGeom, mat)
-      tick.position.y =
-        heightScale * (val * (lineHeight / (arr.length - 1)) - lineHeight / 2)
-      indicator.add(tick)
-    }
-  )
-
-  const triangleBottom = createIndicatorTriangle(mat, geom)
-  triangleBottom.position.y = (heightScale * lineHeight) / -2 - 0.24
+  const triangleBottom = createTriangle(mat, geom)
+  triangleBottom.position.y = (heightScale * LINE_HEIGHT) / -2 - 0.24
   triangleBottom.scale.set(1, -1, 1)
   indicator.add(triangleBottom)
 
   return indicator
 }
 
-const createIndicatorTriangle = (mat, geom) => {
+function createLine(mat, geom) {
+  return new Mesh(geom.clone().scale(LINE_WIDTH, LINE_HEIGHT + 0.14, 1), mat)
+}
+
+function createTicks(mat, geom, heightScale) {
+  geom.applyMatrix(new Matrix4().makeTranslation(0.5, 0, 0))
+  geom.scale(0.14, LINE_WIDTH, 1)
+
+  return times(Math.ceil((CHART_MAX_TEMP - CHART_MIN_TEMP) / 10) + 1).map(
+    (val, _, arr) => {
+      const tick = new Mesh(geom, mat)
+      tick.position.y =
+        heightScale * (val * (LINE_HEIGHT / (arr.length - 1)) - LINE_HEIGHT / 2)
+      return tick
+    }
+  )
+}
+
+function createTriangle(mat, geom) {
   const triangle = new Group()
   const line1 = new Mesh(geom.clone().scale(0.2, LINE_WIDTH, 1), mat)
 
