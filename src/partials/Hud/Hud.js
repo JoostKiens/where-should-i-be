@@ -8,7 +8,6 @@ export const Hud = ({ docs, style }) => {
   const [selected, setSelected] = useState()
   const [{ selectedIndex }] = useStoreValue()
 
-  // @TODO check weather data for date
   useEffect(() => {
     setSelected(determineSelected(selectedIndex, docs))
   }, [selectedIndex, docs])
