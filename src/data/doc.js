@@ -6,8 +6,6 @@ import { LOCATIONS } from '/constants'
 const DAYS = 365
 const LOCATION_IDS = Object.keys(LOCATIONS)
 
-// @TOD move to webworkers where possible
-
 export async function getDocs() {
   const docs = await getDocsForDays()
   const missingEntries = getMissingEntries(docs)
