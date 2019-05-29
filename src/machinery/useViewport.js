@@ -1,37 +1,51 @@
 import { BREAKPOINTS } from '/constants'
+import { useEffect, useState, useContext } from 'react'
 import crossBrowserResize from 'cross-browser-resize'
-import { debounce } from '/machinery/debounce'
-import { useEffect, useState, useRef } from 'react'
+import debounce from 'lodash/debounce'
 
-export const useViewport = () => {
-  const mounted = useRef(false)
-  const [viewport, setViewport] = useState(getViewport(mounted))
+const ViewportContext = React.createContext(null)
 
-  useEffect(() => {
-    mounted.current = true
-    return () => (mounted.current = false)
-  }, [mounted])
+export function useViewport() {
+  const viewport = useContext(ViewportContext)
+  if (!viewport) throw new Error('Please ensure ViewportContextProvider')
+  return viewport
+}
+
+export function ViewportContextProvider({ children }) {
+  const viewport = useRawViewport()
+  return (
+    <ViewportContext.Provider value={viewport}>
+      {children}
+    </ViewportContext.Provider>
+  )
+}
+
+export const useRawViewport = () => {
+  const [viewport, setViewport] = useState(getViewport(false))
 
   useEffect(() => {
     const handleResize = debounce(() => {
-      if (mounted.current) setViewport(getViewport(mounted))
+      setViewport(getViewport(true))
     }, 160)
 
     crossBrowserResize.addListener(handleResize)
-    return () => crossBrowserResize.removeListener(handleResize)
-  }, [mounted])
+    return () => {
+      crossBrowserResize.removeListener(handleResize)
+      handleResize.cancel()
+    }
+  }, [])
 
   return viewport
 }
 
-const getViewport = mounted => {
-  const viewportWidth = mounted ? document.body.clientWidth : 0
+const getViewport = isMounted => {
+  const viewportWidth = isMounted ? document.body.clientWidth : 0
   return {
-    viewportHeight: mounted ? window.innerHeight : 0,
-    viewportLg: viewportWidth >= BREAKPOINTS.LG,
-    viewportMd: viewportWidth >= BREAKPOINTS.MD,
-    viewportSm: viewportWidth >= BREAKPOINTS.SM,
     viewportWidth,
+    viewportHeight: isMounted ? window.innerHeight : 0,
+    viewportSm: viewportWidth >= BREAKPOINTS.SM,
+    viewportMd: viewportWidth >= BREAKPOINTS.MD,
+    viewportLg: viewportWidth >= BREAKPOINTS.LG,
     viewportXl: viewportWidth >= BREAKPOINTS.XL,
   }
 }
