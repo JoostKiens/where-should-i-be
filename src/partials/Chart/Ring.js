@@ -2,7 +2,7 @@ import { createSegments } from './createSegments'
 import { Group } from 'three'
 import { useCallback, useEffect } from 'react'
 import { useThree } from '/machinery/ThreeJSManager/'
-import { useStateValue } from '/machinery/state'
+import { useStoreValue } from '/store'
 import { useViewport } from '/machinery/useViewport'
 import { ARCS } from '/constants'
 
@@ -26,14 +26,14 @@ export const Ring = props => {
   )
 
   const { getEntity } = useThree(setup)
-  const [{ snapIndex }] = useStateValue()
+  const [{ selectedIndex }] = useStoreValue()
 
   useEffect(() => {
     const ring = getEntity()
-    ring.rotation.z = ARCS[snapIndex]
+    ring.rotation.z = ARCS[selectedIndex]
     ring.updateMatrix()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [snapIndex])
+  }, [selectedIndex])
 
   useEffect(() => {
     // @TODO handle different viewports, share with Indicator

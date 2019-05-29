@@ -1,8 +1,11 @@
+// https://medium.com/simply/state-management-with-react-hooks-and-context-api-at-10-lines-of-code-baf6be8302c
 import { ARCS } from '/constants'
+import { createContext, useContext, useReducer } from 'react'
 
-export const initialState = { arc: 0, snapIndex: 364, isPanning: false }
+const StoreContext = createContext()
+const initialState = { arc: 0, selectedIndex: 364 }
 
-export const reducer = (state, action) => {
+function reducer(state, action) {
   switch (action.type) {
     case 'incrementArc':
       return {
@@ -22,7 +25,7 @@ export const reducer = (state, action) => {
 
       return {
         ...state,
-        snapIndex: arcIndex,
+        selectedIndex: arcIndex,
       }
     case 'isPanning':
       return {
@@ -33,3 +36,10 @@ export const reducer = (state, action) => {
       return state
   }
 }
+
+export const StoreProvider = ({ children }) => (
+  <StoreContext.Provider value={useReducer(reducer, initialState)}>
+    {children}
+  </StoreContext.Provider>
+)
+export const useStoreValue = () => useContext(StoreContext)

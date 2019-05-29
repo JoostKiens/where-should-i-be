@@ -2,9 +2,8 @@ import { Chart } from '/partials/Chart/Chart'
 import { Toucher } from '/partials/Toucher'
 import { Hud } from '/partials/Hud/Hud'
 import { useEffect, useState } from 'react'
-import { StateProvider } from '/machinery/state'
 import { ViewportContextProvider } from '/machinery/useViewport'
-import { reducer, initialState } from '/store'
+import { StoreProvider } from '/store'
 import { enrichDocs } from '/enrichDocs'
 import styles from './Main.css'
 
@@ -29,11 +28,11 @@ export default function Main({ docs }) {
   }, [setIsMounted])
 
   return (
-    <StateProvider initialState={initialState} reducer={reducer}>
+    <StoreProvider>
       <ViewportContextProvider>
         {!isMounted ? null : <Scene docs={enrichedDocs} />}
       </ViewportContextProvider>
-    </StateProvider>
+    </StoreProvider>
   )
 }
 

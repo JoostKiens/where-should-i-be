@@ -1,4 +1,4 @@
-import { useStateValue } from '/machinery/state'
+import { useStoreValue } from '/store'
 import { useEffect, useState } from 'react'
 import { Card } from './Card'
 import styles from './Hud.css'
@@ -6,11 +6,12 @@ import { CHART_MAX_TEMP, CHART_MIN_TEMP, MONTHS } from '/constants'
 
 export const Hud = ({ docs, style }) => {
   const [selected, setSelected] = useState()
-  const [{ snapIndex }] = useStateValue()
+  const [{ selectedIndex }] = useStoreValue()
 
+  // @TODO check weather data for date
   useEffect(() => {
-    setSelected(determineSelected(snapIndex, docs))
-  }, [snapIndex, docs])
+    setSelected(determineSelected(selectedIndex, docs))
+  }, [selectedIndex, docs])
 
   return !selected ? null : (
     <div style={style} className={styles.main}>

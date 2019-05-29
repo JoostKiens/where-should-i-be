@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useStateValue } from '/machinery/state'
+import { useStoreValue } from '/store'
 import { clamp } from '/machinery/clamp'
 const Hammer = typeof window !== 'undefined' ? require('hammerjs') : undefined
 
@@ -10,7 +10,7 @@ const SWIPE_FACTOR = 0.01
 const MIN_VELOCITY = 0.07
 
 export const Toucher = ({ style }) => {
-  const [, dispatch] = useStateValue()
+  const [, dispatch] = useStoreValue()
   const [mc, setMc] = useState(null)
   const [velocity, setVelocity] = useState(false)
   const el = useRef(null)
@@ -23,16 +23,18 @@ export const Toucher = ({ style }) => {
   }, [setMc, mc, el])
 
   useEffect(() => {
-    const handlePan = ({ deltaX, isFinal }) => {
+    function handlePan({ deltaX, isFinal }) {
       if (!isFinal) stop()
       const velocityX = clamp(-MAX_PAN_VELOCITY, MAX_PAN_VELOCITY, deltaX)
       dispatch({ type: 'incrementArc', value: velocityX * PAN_FACTOR })
       dispatch({ type: 'snapTo' })
     }
 
-    const handleSwipe = ({ velocityX }) => setVelocity(velocityX)
+    function handleSwipe({ velocityX }) {
+      setVelocity(velocityX)
+    }
 
-    const stop = () => {
+    function stop() {
       setVelocity(0)
       window.cancelAnimationFrame(frameID.current)
     }
