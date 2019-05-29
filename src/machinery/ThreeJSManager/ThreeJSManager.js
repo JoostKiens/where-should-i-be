@@ -1,5 +1,4 @@
-import React, { createContext, useEffect, useRef, useState } from 'react'
-
+import { createContext, useEffect, useRef, useState } from 'react'
 import Canvas from './Canvas'
 import { useAnimationFrame } from './useAnimationFrame'
 
