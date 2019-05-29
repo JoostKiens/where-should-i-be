@@ -14,7 +14,7 @@ import { times } from '/machinery/array'
 const LINE_WIDTH = 0.02
 
 // @TODO rename and refactor
-export const Scale = props => {
+export const RangeIndicator = props => {
   const { viewportSm } = useViewport()
   const setup = useCallback(context => {
     const { scene } = context
