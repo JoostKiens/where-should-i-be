@@ -45,6 +45,10 @@ export const useRawViewport = () => {
   }
 
   return {
+    size: Object.keys(BREAKPOINTS).reduce(
+      (res, bp) => (viewportWidth >= BREAKPOINTS[bp] ? bp : res),
+      'xs'
+    ),
     viewportWidth,
     viewportHeight,
     viewportSm: viewportWidth >= BREAKPOINTS.SM,
