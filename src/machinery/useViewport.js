@@ -1,5 +1,5 @@
 import { BREAKPOINTS } from '/constants'
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, useRef } from 'react'
 import crossBrowserResize from 'cross-browser-resize'
 import debounce from 'lodash/debounce'
 
@@ -21,11 +21,17 @@ export function ViewportContextProvider({ children }) {
 }
 
 export const useRawViewport = () => {
-  const [viewport, setViewport] = useState(getViewport(false))
+  const mounted = useRef(false)
+  const [viewport, setViewport] = useState(getViewport(mounted.current))
+
+  useEffect(() => {
+    mounted.current = true
+    return () => (mounted.current = false)
+  }, [])
 
   useEffect(() => {
     const handleResize = debounce(() => {
-      setViewport(getViewport(true))
+      if (mounted.current) setViewport(getViewport(mounted.current))
     }, 160)
 
     crossBrowserResize.addListener(handleResize)
