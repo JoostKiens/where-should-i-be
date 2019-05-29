@@ -1,17 +1,23 @@
 import { forwardRef, useEffect } from 'react'
-import { debounce } from '/machinery/debounce'
+import crossBrowserResize from 'cross-browser-resize'
+import debounce from 'lodash/debounce'
 
 const Canvas = ({ style }, ref) => {
   useEffect(() => {
-    const onWindowResize = debounce(() => {
-      if (ref.current) {
-        ref.current.style.width = style.width
-        ref.current.style.height = style.height
-      }
+    const handleResize = debounce(() => {
+      if (ref.current) setSize()
     }, 160)
 
-    window.addEventListener('resize', onWindowResize)
-    return () => window.removeEventListener('resize', onWindowResize)
+    crossBrowserResize.addListener(handleResize)
+    return () => {
+      crossBrowserResize.removeListener(handleResize)
+      handleResize.cancel()
+    }
+
+    function setSize() {
+      ref.current.style.width = style.width
+      ref.current.style.height = style.height
+    }
   }, [ref, style.width, style.height])
 
   return (
