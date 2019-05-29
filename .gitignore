@@ -1,6 +1,6 @@
 *.DS_Store
 *.log
-config/local.js
+config/
 node_modules
 target
 config/credentials.json
