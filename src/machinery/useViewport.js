@@ -4,11 +4,12 @@ import { debounce } from '/machinery/debounce'
 import { useEffect, useState, useRef } from 'react'
 
 export const useViewport = () => {
-  const mounted = useRef()
+  const mounted = useRef(false)
   const [viewport, setViewport] = useState(getViewport(mounted))
 
   useEffect(() => {
-    return () => (mounted.current = null)
+    mounted.current = true
+    return () => (mounted.current = false)
   }, [mounted])
 
   useEffect(() => {
